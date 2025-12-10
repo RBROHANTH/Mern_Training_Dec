@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Positions - Learning Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            padding-bottom: 150px; /* Space for fixed element */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .explanation {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .code-hint {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .box {
+            width: 400px;
+            height: 100px;
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-weight: bold;
+        }
+
+        /* 1. STATIC - Default positioning */
+        .static-box {
+            position: static; /* This is the default, no need to specify */
+            background-color: lightblue;
+        }
+
+        /* 2. RELATIVE - Positioned relative to its normal position */
+        .relative-container {
+            border: 2px dashed gray;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .relative-box {
+            position: relative;
+            top: 20px;    /* Moves 20px DOWN from its normal position */
+            left: 30px;   /* Moves 30px RIGHT from its normal position */
+            background-color: lightgreen;
+        }
+
+        /* 3. ABSOLUTE - Positioned relative to nearest positioned ancestor */
+        .absolute-container {
+            position: relative; /* This makes it the reference for absolute child */
+            border: 2px dashed orange;
+            height: 200px;
+            margin-top: 20px;
+            background-color: #fff3e0;
+        }
+        .absolute-box {
+            position: absolute;
+            top: 20px;    /* 20px from TOP of the container */
+            right: 20px;  /* 20px from RIGHT of the container */
+            width: 250px;
+            background-color: lightcoral;
+        }
+
+        /* 4. FIXED - Positioned relative to the viewport */
+        .fixed-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background-color: lightgoldenrodyellow;
+            z-index: 1000;
+        }
+
+        /* 5. STICKY - Hybrid of relative and fixed */
+        .sticky-container {
+            height: 300px;
+            overflow-y: scroll;
+            border: 2px solid #333;
+            margin-top: 20px;
+        }
+        .sticky-box {
+            position: sticky;
+            top: 0;       /* Sticks to top when scrolling */
+            background-color: #dda0dd;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .scroll-content {
+            padding: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 CSS Positions - Complete Learning Guide</h1>
+
+    <!-- 1. STATIC POSITION -->
+    <h2>1. Static Position (Default)</h2>
+    <div class="explanation">
+        <strong>What it does:</strong> Elements are positioned according to the normal document flow. 
+        <br><strong>Use case:</strong> This is the default behavior. You rarely need to set this explicitly.
+        <br><strong>Note:</strong> top, right, bottom, left, and z-index have NO effect on static elements.
+    </div>
+    <div class="code-hint">position: static; /* Default - no special positioning */</div>
+    <div class="box static-box">I'm Static (Normal Flow)</div>
+
+    <!-- 2. RELATIVE POSITION -->
+    <h2>2. Relative Position</h2>
+    <div class="explanation">
+        <strong>What it does:</strong> Element is positioned relative to its NORMAL position. 
+        The original space is preserved in the document flow.
+        <br><strong>Use case:</strong> Small adjustments, or as a container for absolute children.
+    </div>
+    <div class="code-hint">position: relative; top: 20px; left: 30px;</div>
+    <div class="relative-container">
+        <p>⬇️ Dashed border shows where the box WOULD be normally</p>
+        <div class="box relative-box">I'm Relative (moved 20px down, 30px right)</div>
+    </div>
+
+    <!-- 3. ABSOLUTE POSITION -->
+    <h2>3. Absolute Position</h2>
+    <div class="explanation">
+        <strong>What it does:</strong> Element is removed from normal flow and positioned relative to its 
+        nearest positioned ancestor (parent with position: relative/absolute/fixed).
+        <br><strong>Use case:</strong> Dropdowns, tooltips, overlays, badges on icons.
+        <br><strong>Important:</strong> If no positioned ancestor exists, it uses the document body!
+    </div>
+    <div class="code-hint">/* Parent */ position: relative;<br>/* Child */ position: absolute; top: 20px; right: 20px;</div>
+    <div class="absolute-container">
+        <p>I'm the parent with position: relative (orange dashed border)</p>
+        <div class="box absolute-box">I'm Absolute (top: 20px, right: 20px from parent)</div>
+    </div>
+
+    <!-- 4. FIXED POSITION -->
+    <h2>4. Fixed Position</h2>
+    <div class="explanation">
+        <strong>What it does:</strong> Element is removed from normal flow and positioned relative to the 
+        VIEWPORT. It stays in place even when you scroll!
+        <br><strong>Use case:</strong> Navigation bars, chat buttons, cookie banners, back-to-top buttons.
+    </div>
+    <div class="code-hint">position: fixed; bottom: 20px; right: 20px;</div>
+    <p>👉 Look at the bottom-right corner of your screen!</p>
+
+    <!-- 5. STICKY POSITION -->
+    <h2>5. Sticky Position</h2>
+    <div class="explanation">
+        <strong>What it does:</strong> A hybrid! Element acts as relative until you scroll past a threshold, 
+        then it becomes fixed.
+        <br><strong>Use case:</strong> Table headers, section headers, navigation that sticks after scrolling.
+        <br><strong>Important:</strong> You MUST specify at least one of: top, right, bottom, or left!
+    </div>
+    <div class="code-hint">position: sticky; top: 0;</div>
+    <div class="sticky-container">
+        <div class="sticky-box">📌 I'm Sticky! Scroll down and I'll stick to the top ⬇️</div>
+        <div class="scroll-content">
+            <p>Scroll within this box to see the sticky effect!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate.</p>
+            <p>Excepteur sint occaecat cupidatat non proident.</p>
+            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Keep scrolling to see sticky in action...</p>
+            <p>Almost there...</p>
+            <p>The header stays stuck at the top! 🎉</p>
+        </div>
+    </div>
+
+    <!-- Fixed element - always visible -->
+    <div class="box fixed-box">I'm Fixed (always bottom-right)</div>
+
+</body>
+</html>
